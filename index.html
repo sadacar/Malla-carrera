@@ -57,13 +57,59 @@
   <div id="contenedor"></div>
 
   <script>
+    // Aquí pegamos directamente las materias
+    const materias = [
+      {
+        "codigo": "001295",
+        "nombre": "Cálculo Diferencial",
+        "creditos": 3,
+        "prerequisitos": [],
+        "semestre": 1
+      },
+      {
+        "codigo": "001290",
+        "nombre": "Álgebra Lineal",
+        "creditos": 3,
+        "prerequisitos": [],
+        "semestre": 1
+      },
+      {
+        "codigo": "033698",
+        "nombre": "Introducción a la programación",
+        "creditos": 3,
+        "prerequisitos": [],
+        "semestre": 1
+      },
+      {
+        "codigo": "001297",
+        "nombre": "Cálculo Integral",
+        "creditos": 3,
+        "prerequisitos": ["001295"],
+        "semestre": 2
+      },
+      {
+        "codigo": "001340",
+        "nombre": "Física Mecánica",
+        "creditos": 3,
+        "prerequisitos": [],
+        "semestre": 2
+      },
+      {
+        "codigo": "033763",
+        "nombre": "Introducción a la Ingeniería",
+        "creditos": 2,
+        "prerequisitos": [],
+        "semestre": 2
+      }
+    ];
+
     let materiasVistas = JSON.parse(localStorage.getItem("materiasVistas") || "[]");
 
     function guardarVistas() {
       localStorage.setItem("materiasVistas", JSON.stringify(materiasVistas));
     }
 
-    function puedeVer(materia, materiasPorCodigo) {
+    function puedeVer(materia) {
       return materia.prerequisitos.every(pr => materiasVistas.includes(pr));
     }
 
@@ -74,60 +120,56 @@
       }
     });
 
-    fetch("materias-imeca.json")
-      .then(res => res.json())
-      .then(data => {
-        const materiasPorSemestre = {};
-        const materiasPorCodigo = {};
+    const materiasPorSemestre = {};
+    const materiasPorCodigo = {};
 
-        data.forEach(m => {
-          materiasPorSemestre[m.semestre] = materiasPorSemestre[m.semestre] || [];
-          materiasPorSemestre[m.semestre].push(m);
-          materiasPorCodigo[m.codigo] = m;
+    materias.forEach(m => {
+      materiasPorSemestre[m.semestre] = materiasPorSemestre[m.semestre] || [];
+      materiasPorSemestre[m.semestre].push(m);
+      materiasPorCodigo[m.codigo] = m;
+    });
+
+    const contenedor = document.getElementById("contenedor");
+
+    Object.keys(materiasPorSemestre).sort((a, b) => a - b).forEach(sem => {
+      const bloque = document.createElement("div");
+      bloque.className = "semestre";
+      const titulo = document.createElement("h2");
+      titulo.textContent = `Semestre ${sem}`;
+      bloque.appendChild(titulo);
+
+      materiasPorSemestre[sem].forEach(m => {
+        const div = document.createElement("div");
+        div.className = "materia";
+        div.innerHTML = `
+          <strong>${m.nombre}</strong><br/>
+          Código: ${m.codigo}<br/>
+          Créditos: ${m.creditos}<br/>
+          Prerrequisitos: ${m.prerequisitos.length ? m.prerequisitos.join(", ") : "Ninguno"}
+        `;
+
+        const yaVista = materiasVistas.includes(m.codigo);
+        const habilitada = puedeVer(m);
+
+        if (yaVista) div.classList.add("vista");
+        else if (habilitada) div.classList.add("habilitada");
+        else div.classList.add("no-disponible");
+
+        div.addEventListener("click", () => {
+          if (materiasVistas.includes(m.codigo)) {
+            materiasVistas = materiasVistas.filter(c => c !== m.codigo);
+          } else if (habilitada || m.prerequisitos.length === 0) {
+            materiasVistas.push(m.codigo);
+          }
+          guardarVistas();
+          location.reload();
         });
 
-        const contenedor = document.getElementById("contenedor");
-
-        Object.keys(materiasPorSemestre).sort((a, b) => a - b).forEach(sem => {
-          const bloque = document.createElement("div");
-          bloque.className = "semestre";
-          const titulo = document.createElement("h2");
-          titulo.textContent = `Semestre ${sem}`;
-          bloque.appendChild(titulo);
-
-          materiasPorSemestre[sem].forEach(m => {
-            const div = document.createElement("div");
-            div.className = "materia";
-            div.innerHTML = `
-              <strong>${m.nombre}</strong><br/>
-              Código: ${m.codigo}<br/>
-              Créditos: ${m.creditos}<br/>
-              Prerrequisitos: ${m.prerequisitos.length ? m.prerequisitos.join(", ") : "Ninguno"}
-            `;
-
-            const yaVista = materiasVistas.includes(m.codigo);
-            const habilitada = puedeVer(m, materiasPorCodigo);
-
-            if (yaVista) div.classList.add("vista");
-            else if (habilitada) div.classList.add("habilitada");
-            else div.classList.add("no-disponible");
-
-            div.addEventListener("click", () => {
-              if (materiasVistas.includes(m.codigo)) {
-                materiasVistas = materiasVistas.filter(c => c !== m.codigo);
-              } else if (habilitada || m.prerequisitos.length === 0) {
-                materiasVistas.push(m.codigo);
-              }
-              guardarVistas();
-              location.reload();
-            });
-
-            bloque.appendChild(div);
-          });
-
-          contenedor.appendChild(bloque);
-        });
+        bloque.appendChild(div);
       });
+
+      contenedor.appendChild(bloque);
+    });
   </script>
 </body>
 </html>
