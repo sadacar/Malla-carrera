@@ -4,17 +4,28 @@
   <meta charset="UTF-8" />
   <title>Malla Interactiva - Ingeniería Mecánica</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; background: #f5f5f5; }
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
     .materia {
       border: 2px solid #0077cc;
       background: white;
       border-radius: 8px;
       padding: 10px;
       margin: 10px;
-      width: 200px;
+      width: 250px;
     }
-    .grid { display: flex; flex-wrap: wrap; gap: 10px; }
-    .prereq { font-size: 0.8em; color: #555; }
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .prereq {
+      font-size: 0.8em;
+      color: #555;
+    }
   </style>
 </head>
 <body>
@@ -22,48 +33,25 @@
   <div class="grid" id="malla"></div>
 
   <script>
-    const materias = [
-      {
-        nombre: "Cálculo Diferencial",
-        creditos: 3,
-        codigo: "001295",
-        prerequisitos: []
-      },
-      {
-        nombre: "Cálculo Integral",
-        creditos: 3,
-        codigo: "001297",
-        prerequisitos: ["001295"]
-      },
-      {
-        nombre: "Cálculo Vectorial",
-        creditos: 3,
-        codigo: "001299",
-        prerequisitos: ["001290", "001297"]
-      },
-      {
-        nombre: "Física Mecánica",
-        creditos: 3,
-        codigo: "001340",
-        prerequisitos: []
-      }
-    ];
+    fetch('materias-imeca.json')
+      .then(response => response.json())
+      .then(materias => {
+        const contenedor = document.getElementById("malla");
 
-    const contenedor = document.getElementById("malla");
-
-    materias.forEach(m => {
-      const div = document.createElement("div");
-      div.className = "materia";
-      div.innerHTML = `
-        <strong>${m.nombre}</strong><br/>
-        Créditos: ${m.creditos}<br/>
-        Código: ${m.codigo}<br/>
-        <div class="prereq">
-          Prerrequisitos: ${m.prerequisitos.length ? m.prerequisitos.join(", ") : "Ninguno"}
-        </div>
-      `;
-      contenedor.appendChild(div);
-    });
+        materias.forEach(m => {
+          const div = document.createElement("div");
+          div.className = "materia";
+          div.innerHTML = `
+            <strong>${m.nombre}</strong><br/>
+            Créditos: ${m.creditos}<br/>
+            Código: ${m.codigo}<br/>
+            <div class="prereq">
+              Prerrequisitos: ${m.prerequisitos.length ? m.prerequisitos.join(", ") : "Ninguno"}
+            </div>
+          `;
+          contenedor.appendChild(div);
+        });
+      });
   </script>
 </body>
 </html>
