@@ -3,120 +3,42 @@
     "codigo": "001295",
     "nombre": "Cálculo Diferencial",
     "creditos": 3,
-    "prerequisitos": []
-  },
-  {
-    "codigo": "001297",
-    "nombre": "Cálculo Integral",
-    "creditos": 3,
-    "prerequisitos": [
-      "001295"
-    ]
-  },
-  {
-    "codigo": "001299",
-    "nombre": "Cálculo Vectorial",
-    "creditos": 3,
-    "prerequisitos": [
-      "001290",
-      "001297"
-    ]
+    "prerequisitos": [],
+    "semestre": 1
   },
   {
     "codigo": "001290",
     "nombre": "Álgebra Lineal",
     "creditos": 3,
-    "prerequisitos": []
-  },
-  {
-    "codigo": "001300",
-    "nombre": "Ecuaciones Diferenciales",
-    "creditos": 3,
-    "prerequisitos": [
-      "001290",
-      "001297"
-    ]
-  },
-  {
-    "codigo": "033732",
-    "nombre": "Probabilidad y Estadística",
-    "creditos": 3,
-    "prerequisitos": [
-      "001297"
-    ]
-  },
-  {
-    "codigo": "001340",
-    "nombre": "Física Mecánica",
-    "creditos": 3,
-    "prerequisitos": []
+    "prerequisitos": [],
+    "semestre": 1
   },
   {
     "codigo": "033698",
     "nombre": "Introducción a la programación",
     "creditos": 3,
-    "prerequisitos": []
-  },
-  {
-    "codigo": "033699",
-    "nombre": "Programación Avanzada",
-    "creditos": 3,
-    "prerequisitos": [
-      "033698"
-    ]
-  },
-  {
-    "codigo": "001138",
-    "nombre": "Química Materiales",
-    "creditos": 3,
-    "prerequisitos": []
+    "prerequisitos": [],
+    "semestre": 1
   },
   {
     "codigo": "033735",
-    "nombre": "Innovación y diseño de producto",
+    "nombre": "Inovación y diseño del producto",
     "creditos": 2,
-    "prerequisitos": []
+    "prerequisitos": [],
+    "semestre": 1
+  },
+  {
+    "codigo": "001138",
+    "nombre": "quimica materu",
+    "creditos": 3,
+    "prerequisitos": [],
+    "semestre": 1
   },
   {
     "codigo": "033763",
     "nombre": "Introducción a la Ingeniería",
     "creditos": 2,
-    "prerequisitos": []
-  },
-  {
-    "codigo": "033734",
-    "nombre": "Fundamentos de los materiales",
-    "creditos": 3,
-    "prerequisitos": [
-      "033735"
-    ]
-  },
-  {
-    "codigo": "033733",
-    "nombre": "Proyecto de Diseño en Ingeniería (CDIO año 1)",
-    "creditos": 3,
-    "prerequisitos": [
-      "033763"
-    ]
-  },
-  {
-    "codigo": "001341",
-    "nombre": "Fluidos y Termodinámica",
-    "creditos": 3,
-    "prerequisitos": [
-      "001297",
-      "001340"
-    ]
-  },
-  {
-    "codigo": "033768",
-    "nombre": "Mecánica de materiales",
-    "creditos": 3,
-    "prerequisitos": [
-      "033734",
-      "001297",
-      "001340",
-      "001300"
-    ]
+    "prerequisitos": [],
+    "semestre": 1
   }
 ]
