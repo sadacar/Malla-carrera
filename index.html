@@ -2,54 +2,130 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Malla Interactiva - Ingeniería Mecánica</title>
+  <title>Malla - Ingeniería Mecánica</title>
   <style>
     body {
       font-family: sans-serif;
+      background: #f9f9f9;
       padding: 20px;
-      background: #f5f5f5;
+    }
+    .semestre {
+      margin-bottom: 40px;
+    }
+    .semestre h2 {
+      color: #333;
+      border-bottom: 2px solid #ccc;
     }
     .materia {
-      border: 2px solid #0077cc;
+      border: 2px solid #ccc;
       background: white;
       border-radius: 8px;
       padding: 10px;
-      margin: 10px;
-      width: 250px;
+      margin: 10px 0;
+      width: 300px;
+      cursor: pointer;
+      transition: 0.3s;
     }
-    .grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+    .materia.vista {
+      background: #0077cc;
+      color: white;
     }
-    .prereq {
-      font-size: 0.8em;
-      color: #555;
+    .materia.habilitada:not(.vista) {
+      border-color: green;
+      background: #eaffea;
+    }
+    .materia.no-disponible {
+      opacity: 0.5;
+    }
+    #reset {
+      margin-bottom: 30px;
+      padding: 10px 15px;
+      border: none;
+      background: #cc0000;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #reset:hover {
+      background: #990000;
     }
   </style>
 </head>
 <body>
   <h1>Malla Interactiva - Ingeniería Mecánica</h1>
-  <div class="grid" id="malla"></div>
+  <button id="reset">Reiniciar selección</button>
+  <div id="contenedor"></div>
 
   <script>
-    fetch('materias-imeca.json')
-      .then(response => response.json())
-      .then(materias => {
-        const contenedor = document.getElementById("malla");
+    let materiasVistas = JSON.parse(localStorage.getItem("materiasVistas") || "[]");
 
-        materias.forEach(m => {
-          const div = document.createElement("div");
-          div.className = "materia";
-          div.innerHTML = `
-            <strong>${m.nombre}</strong><br/>
-            Créditos: ${m.creditos}<br/>
-            Código: ${m.codigo}<br/>
-            <div class="prereq">
+    function guardarVistas() {
+      localStorage.setItem("materiasVistas", JSON.stringify(materiasVistas));
+    }
+
+    function puedeVer(materia, materiasPorCodigo) {
+      return materia.prerequisitos.every(pr => materiasVistas.includes(pr));
+    }
+
+    document.getElementById("reset").addEventListener("click", () => {
+      if (confirm("¿Estás seguro de borrar todas las materias vistas?")) {
+        localStorage.removeItem("materiasVistas");
+        location.reload();
+      }
+    });
+
+    fetch("materias-imeca.json")
+      .then(res => res.json())
+      .then(data => {
+        const materiasPorSemestre = {};
+        const materiasPorCodigo = {};
+
+        data.forEach(m => {
+          materiasPorSemestre[m.semestre] = materiasPorSemestre[m.semestre] || [];
+          materiasPorSemestre[m.semestre].push(m);
+          materiasPorCodigo[m.codigo] = m;
+        });
+
+        const contenedor = document.getElementById("contenedor");
+
+        Object.keys(materiasPorSemestre).sort((a, b) => a - b).forEach(sem => {
+          const bloque = document.createElement("div");
+          bloque.className = "semestre";
+          const titulo = document.createElement("h2");
+          titulo.textContent = `Semestre ${sem}`;
+          bloque.appendChild(titulo);
+
+          materiasPorSemestre[sem].forEach(m => {
+            const div = document.createElement("div");
+            div.className = "materia";
+            div.innerHTML = `
+              <strong>${m.nombre}</strong><br/>
+              Código: ${m.codigo}<br/>
+              Créditos: ${m.creditos}<br/>
               Prerrequisitos: ${m.prerequisitos.length ? m.prerequisitos.join(", ") : "Ninguno"}
-            </div>
-          `;
-          contenedor.appendChild(div);
+            `;
+
+            const yaVista = materiasVistas.includes(m.codigo);
+            const habilitada = puedeVer(m, materiasPorCodigo);
+
+            if (yaVista) div.classList.add("vista");
+            else if (habilitada) div.classList.add("habilitada");
+            else div.classList.add("no-disponible");
+
+            div.addEventListener("click", () => {
+              if (materiasVistas.includes(m.codigo)) {
+                materiasVistas = materiasVistas.filter(c => c !== m.codigo);
+              } else if (habilitada || m.prerequisitos.length === 0) {
+                materiasVistas.push(m.codigo);
+              }
+              guardarVistas();
+              location.reload();
+            });
+
+            bloque.appendChild(div);
+          });
+
+          contenedor.appendChild(bloque);
         });
       });
   </script>
