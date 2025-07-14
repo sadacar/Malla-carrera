@@ -1,44 +1,44 @@
 [
   {
-    "codigo": "001295",
-    "nombre": "Cálculo Diferencial",
-    "creditos": 3,
-    "prerequisitos": [],
-    "semestre": 1
-  },
-  {
-    "codigo": "001290",
-    "nombre": "Álgebra Lineal",
-    "creditos": 3,
-    "prerequisitos": [],
-    "semestre": 1
-  },
-  {
-    "codigo": "033698",
-    "nombre": "Introducción a la programación",
-    "creditos": 3,
-    "prerequisitos": [],
-    "semestre": 1
-  },
-  {
-    "codigo": "033735",
-    "nombre": "Inovación y diseño del producto",
-    "creditos": 2,
-    "prerequisitos": [],
-    "semestre": 1
-  },
-  {
-    "codigo": "001138",
-    "nombre": "quimica materu",
-    "creditos": 3,
-    "prerequisitos": [],
-    "semestre": 1
-  },
-  {
-    "codigo": "033763",
-    "nombre": "Introducción a la Ingeniería",
-    "creditos": 2,
-    "prerequisitos": [],
-    "semestre": 1
-  }
+  "codigo": "001295",
+  "nombre": "Calculo Diferencial",
+  "creditos": 3,
+  "prerequisitos": [],
+  "semestre": 1
+},
+{
+  "codigo": "001290",
+  "nombre": "Álgebra Lineal",
+  "creditos": 3,
+  "prerequisitos": [],
+  "semestre": 1
+},
+{
+  "codigo": "033698",
+  "nombre": "Introducción a la programación",
+  "creditos": 3,
+  "prerequisitos": [],
+  "semestre": 1
+},
+{
+  "codigo": "033763",
+  "nombre": "Introducción a la Ingeniería",
+  "creditos": 2,
+  "prerequisitos": [],
+  "semestre": 1
+},
+{
+  "codigo": "001138",
+  "nombre": "Química Materiales",
+  "creditos": 3,
+  "prerequisitos": [],
+  "semestre": 1
+},
+{
+  "codigo": "033735",
+  "nombre": "Innovación y diseño de producto",
+  "creditos": 2,
+  "prerequisitos": [],
+  "semestre": 1
+}
 ]
