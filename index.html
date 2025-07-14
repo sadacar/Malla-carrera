@@ -60,47 +60,47 @@
     // Aquí pegamos directamente las materias
     const materias = [
       {
-        "codigo": "001295",
-        "nombre": "Cálculo Diferencial",
-        "creditos": 3,
-        "prerequisitos": [],
-        "semestre": 1
-      },
-      {
-        "codigo": "001290",
-        "nombre": "Álgebra Lineal",
-        "creditos": 3,
-        "prerequisitos": [],
-        "semestre": 1
-      },
-      {
-        "codigo": "033698",
-        "nombre": "Introducción a la programación",
-        "creditos": 3,
-        "prerequisitos": [],
-        "semestre": 1
-      },
-      {
-        "codigo": "001297",
-        "nombre": "Cálculo Integral",
-        "creditos": 3,
-        "prerequisitos": ["001295"],
-        "semestre": 2
-      },
-      {
-        "codigo": "001340",
-        "nombre": "Física Mecánica",
-        "creditos": 3,
-        "prerequisitos": [],
-        "semestre": 2
-      },
-      {
-        "codigo": "033763",
-        "nombre": "Introducción a la Ingeniería",
-        "creditos": 2,
-        "prerequisitos": [],
-        "semestre": 2
-      }
+  "codigo": "001295",
+  "nombre": "Calculo Diferencial",
+  "creditos": 3,
+  "prerequisitos": [],
+  "semestre": 1
+},
+{
+  "codigo": "001290",
+  "nombre": "Álgebra Lineal",
+  "creditos": 3,
+  "prerequisitos": [],
+  "semestre": 1
+},
+{
+  "codigo": "033698",
+  "nombre": "Introducción a la programación",
+  "creditos": 3,
+  "prerequisitos": [],
+  "semestre": 1
+},
+{
+  "codigo": "033763",
+  "nombre": "Introducción a la Ingeniería",
+  "creditos": 2,
+  "prerequisitos": [],
+  "semestre": 1
+},
+{
+  "codigo": "001138",
+  "nombre": "Química Materiales",
+  "creditos": 3,
+  "prerequisitos": [],
+  "semestre": 1
+},
+{
+  "codigo": "033735",
+  "nombre": "Innovación y diseño de producto",
+  "creditos": 2,
+  "prerequisitos": [],
+  "semestre": 1
+}
     ];
 
     let materiasVistas = JSON.parse(localStorage.getItem("materiasVistas") || "[]");
